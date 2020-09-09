@@ -16,6 +16,12 @@ game_window.setup(width=800,height=600)
 game_window.tracer(0)     #stops window from updating
 
 
+
+#scoring system
+score_a = 0
+score_b = 0
+
+
 #Player A
 
 player_A = turtle.Turtle() #turtle object
@@ -50,6 +56,16 @@ pB.goto(0,0) #player_B.shapesize(stretch_wid=5,stretch_len=1)  #by default 20x20
 pB.dx = 0.2
 pB.dy = 0.2
 
+
+
+#pen for scoring
+score = turtle.Turtle()
+score.speed(0)
+score.color('black')
+score.penup()
+score.hideturtle()
+score.goto(0,260)
+score.write("Player A : 0  - -  0 : Player B", align='center',font=('Impact',24,'normal'))
 #functions
 def player_A_up():
     y = player_A.ycor()  #return y cordinate
@@ -105,12 +121,31 @@ while True:
     if pB.xcor() > 390:
         pB.goto(0,0)
         pB.dx *= -1
+        score_a += 1
+        score.clear()
+        score.write("Player A : " +str(score_a)+"  - -  "+str(score_b)+ " : Player B", align='center',font=('Impact',24,'normal'))
+
         
     if pB.xcor() < -390:
         pB.goto(0,0)
         pB.dx *= -1
-  
-    
+        score_b += 1
+        score.clear()
+        score.write("Player A : " +str(score_a)+"  - -  "+str(score_b)+ " : Player B", align='center',font=('Impact',24,'normal'))
+   
+        #paddle boundary
+    if player_A.ycor() > 240:
+        player_A.sety(240)
+        
+    if player_A.ycor() < -240:
+        player_A.sety(-240)
+        
+    if player_B.ycor() > 240:
+        player_B.sety(240)
+        
+    if player_B.ycor() < -240:
+        player_B.sety(-240)
+        
      #bouncing
      
     if(pB.xcor() > 360 and (pB.ycor() < player_B.ycor()+40 and pB.ycor() > player_B.ycor()-40)):
